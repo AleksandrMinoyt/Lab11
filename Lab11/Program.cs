@@ -21,12 +21,12 @@ namespace Lab11
                 Console.WriteLine("Введите коэффициент b");
                 ur.Koef_b = Convert.ToDouble(Console.ReadLine());
 
-                Console.WriteLine("Решение уравнения x={0}", ur.Root());
+                Console.WriteLine("Решение уравнения {0}", ur.Root());
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Ошибка: {0}",ex.Message);
-            }           
+                Console.WriteLine("Ошибка: {0}", ex.Message);
+            }
             Console.ReadKey();
         }
 
@@ -41,17 +41,11 @@ namespace Lab11
                 get { return _k; }
                 set
                 {
-                    if (value == 0)
-                    {
-                        throw new Exception("Коэфициент к=0 не имеет смысла, уравнение не имеет решений");
-                    }
-                    else
-                    {
-                        _k = value;
-                    }
+                    _k = value;
+
                 }
             }
-            
+
             public double Koef_b
             {
                 get { return _b; }
@@ -59,22 +53,29 @@ namespace Lab11
             }
 
 
-            public double Root()
+            public Lin(double k, double b)
             {
-                try
-                {
-                    double result= -_b / _k;
+                _k = k;
+                _b = b;
+            }
 
-                    if(result.CompareTo(double.NaN)==0) //если вызвать Root сразу после создания класса, поля проинициализированы 0, 0/0 не вызывает исключения
-                    {
-                        throw new Exception("Неопределенный результат (деление 0 на 0)");
-                    }
-                    return result;
-                }
-                catch (Exception ex)
+
+            public string Root()
+            {
+
+                if (_b == 0 && _k == 0)
                 {
-                    throw  ex;
+                    return "Любое число";
                 }
+               
+                if (_k == 0)
+                {
+                    return "Уравнение не имеет решения";
+                }
+
+                double result = -_b / _k;
+                return string.Format("x={0}",result);
+
             }
         }
     }
